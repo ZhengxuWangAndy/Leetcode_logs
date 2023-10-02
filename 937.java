@@ -36,11 +36,11 @@ class Solution {
         // ArrayList<String> letters = new ArrayList<>();
 
         PriorityQueue<String> letters = new PriorityQueue<>((a,b) -> {
-            String[] splitA = a.split(" ", 2);
+            String[] splitA = a.split(" ", 2);  // split once
             String[] splitB = b.split(" ", 2);
-            int cmp = splitA[1].compareTo(splitB[1]);
+            int cmp = splitA[1].compareTo(splitB[1]);   // The result cmp will be negative if a comes before b, positive if a comes after b, and zero if they are equal based on content.
             if (cmp == 0){
-                return splitA[0].compareTo(splitB[0]);
+                return splitA[0].compareTo(splitB[0]);  // equals 0 means same content, then compare the identifier.
             }
             return cmp;
         });
