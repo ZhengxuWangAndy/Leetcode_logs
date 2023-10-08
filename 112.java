@@ -36,34 +36,42 @@ class Solution {
     }
 }
 
-// BFS stack
+// BFS Queue
 class Solution {
-    public boolean hasPathSum(TreeNode root, int sum) {
-        if (root == null) {
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        Queue<TreeNode> nodeQ = new LinkedList<>();
+        Queue<Integer> valQ = new LinkedList<>();
+
+        if(root == null){
             return false;
         }
-        Queue<TreeNode> queNode = new LinkedList<TreeNode>();
-        Queue<Integer> queVal = new LinkedList<Integer>();
-        queNode.offer(root);
-        queVal.offer(root.val);
-        while (!queNode.isEmpty()) {
-            TreeNode now = queNode.poll();
-            int temp = queVal.poll();
-            if (now.left == null && now.right == null) {
-                if (temp == sum) {
+
+        nodeQ.offer(root);
+        valQ.offer(root.val);
+
+        while(!nodeQ.isEmpty()){
+            TreeNode node = nodeQ.poll();
+            int temp = valQ.poll();
+            if(node.left == null && node.right == null){
+                if(temp == targetSum){
                     return true;
                 }
                 continue;
             }
-            if (now.left != null) {
-                queNode.offer(now.left);
-                queVal.offer(now.left.val + temp);
+
+            if(node.left != null){
+                valQ.offer(temp + node.left.val);
+                nodeQ.offer(node.left);
             }
-            if (now.right != null) {
-                queNode.offer(now.right);
-                queVal.offer(now.right.val + temp);
+
+            if(node.right != null){
+                valQ.offer(temp + node.right.val);
+                nodeQ.offer(node.right);
             }
+
         }
-        return false;
+
+
+        return false; 
     }
 }
