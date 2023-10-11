@@ -70,3 +70,32 @@ class Solution {
         return dummy.next;
     }
 }
+
+// Best solution: 头插法
+class Solution {
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if(head.next == null || left == right){
+            return head;
+        }
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy;
+        int pos = 0;
+
+        for(int i = 1; i < left; i++){
+            pre = pre.next;
+        }
+        ListNode cur = pre.next;
+        
+        for(int i = left; i < right; i++){
+            ListNode next = cur.next;
+            cur.next = next.next;
+            next.next = pre.next;
+            pre.next = next;
+        }
+
+
+        return dummy.next;
+    }
+}
