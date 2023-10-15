@@ -30,3 +30,22 @@ where id not in (
     from Tree
     where p_id is not null
 ) and p_id is not null
+
+
+-- use case when to separate
+select id,
+    case
+        when Tree.id = (select Tree.id from Tree where p_id is null)
+            then 'Root'
+        when Tree.id in (select Tree.p_id from Tree)
+            then 'Inner'
+        else 'Leaf'
+    end as type
+from Tree
+
+
+-- use if sentence to separate
+select id, 
+    if(isnull(Tree.p_id), 'Root', if(Tree.id in (
+        select p_id from Tree), 'Inner', 'Leaf')) as type
+from Tree
